@@ -5,7 +5,6 @@ export const JournalPage = () => {
   return (
     <>
       <Typography>JournalPage</Typography>
-      <MailOutline />
     </>
   );
 };
