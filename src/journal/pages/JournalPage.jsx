@@ -1,5 +1,5 @@
 import { JournalLayout } from "../layout/JournalLayout";
-import { NothingSelectedView } from "../views";
+import { NoteView } from "../views";
 
 export const JournalPage = () => {
   return (
@@ -10,7 +10,9 @@ export const JournalPage = () => {
         commodo cillum labore est id irure ipsum eu adipisicing et et magna.
       </Typography> */}
 
-      <NothingSelectedView />
+      {/* <NothingSelectedView /> */}
+
+      <NoteView/>
     </JournalLayout>
   );
 };
