@@ -10,9 +10,17 @@ const formData = {
   displayName:'Camilo Cortes'
 }
 
+const formValidations={
+  email:[(value)=>value.includes('@'),'el correo debe de tener una @'],
+  password:[(value)=>value.length >= 6,'el password debe de tener mas de 6 letras'],
+  displayName:[(value)=>value.length >= 1,'el nombre es obligatorio'],
+}
+
 export const RegistrerPage = () => {
 
-  const { displayName,email, password, onInputChange,formState } = useForm(formData);
+  const { displayName,email, password, onInputChange,formState,
+    isFormValid,displayNameValid,nameValid,passwordValid
+  } = useForm(formData,formValidations);
 
 
   const onSubmit = (e)=>{
@@ -32,6 +40,8 @@ export const RegistrerPage = () => {
               value={ displayName }
               onChange={ onInputChange }
               fullWidth
+              error={!displayNameValid}
+              helperText={displayNameValid}
             />
           </Grid>
 
