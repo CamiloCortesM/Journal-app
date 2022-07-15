@@ -1,32 +1,43 @@
+import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
 
-
 const formData = {
-  email:'camilo@google.com',
-  password: '123456',
-  displayName:'Camilo Cortes'
-}
+  email: "",
+  password: "",
+  displayName: "",
+};
 
-const formValidations={
-  email:[(value)=>value.includes('@'),'el correo debe de tener una @'],
-  password:[(value)=>value.length >= 6,'el password debe de tener mas de 6 letras'],
-  displayName:[(value)=>value.length >= 1,'el nombre es obligatorio'],
-}
+const formValidations = {
+  email: [(value) => value.includes("@"), "el correo debe de tener una @"],
+  password: [
+    (value) => value.length >= 6,
+    "el password debe de tener mas de 6 letras",
+  ],
+  displayName: [(value) => value.length >= 1, "el nombre es obligatorio"],
+};
 
 export const RegistrerPage = () => {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const {
+    displayName,
+    email,
+    password,
+    onInputChange,
+    formState,
+    isFormValid,
+    displayNameValid,
+    emailValid,
+    passwordValid,
+  } = useForm(formData, formValidations);
 
-  const { displayName,email, password, onInputChange,formState,
-    isFormValid,displayNameValid,nameValid,passwordValid
-  } = useForm(formData,formValidations);
-
-
-  const onSubmit = (e)=>{
+  const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formState)
-  }
+    setFormSubmitted(true);
+    console.log(formState);
+  };
   return (
     <AuthLayout title="Register">
       <form onSubmit={onSubmit}>
@@ -37,11 +48,11 @@ export const RegistrerPage = () => {
               type="text"
               placeholder="Nombre completo"
               name="displayName"
-              value={ displayName }
-              onChange={ onInputChange }
+              value={displayName}
+              onChange={onInputChange}
               fullWidth
-              error={!displayNameValid}
-              helperText={displayNameValid}
+              error={!!displayNameValid && formSubmitted} // convierte en valor booleano
+              helperText={formSubmitted && displayNameValid}
             />
           </Grid>
 
@@ -51,9 +62,11 @@ export const RegistrerPage = () => {
               type="email"
               placeholder="correo@google.com"
               name="email"
-              value={ email }
-              onChange={ onInputChange }
+              value={email}
+              onChange={onInputChange}
               fullWidth
+              error={!!emailValid && formSubmitted}
+              helperText={formSubmitted && emailValid}
             />
           </Grid>
 
@@ -63,9 +76,11 @@ export const RegistrerPage = () => {
               type="password"
               placeholder="Contraseña"
               name="password"
-              value={ password }
-              onChange={ onInputChange }
+              value={password}
+              onChange={onInputChange}
               fullWidth
+              error={!!passwordValid && formSubmitted}
+              helperText={formSubmitted && passwordValid}
             />
           </Grid>
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
