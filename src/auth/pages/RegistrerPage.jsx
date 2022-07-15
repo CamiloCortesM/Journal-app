@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
+import { startCreatingUserWithEmailPassword } from "../../store/auth/thunks";
 
 const formData = {
   email: "",
@@ -20,6 +22,7 @@ const formValidations = {
 };
 
 export const RegistrerPage = () => {
+  const dispatch = useDispatch();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const {
     displayName,
@@ -36,7 +39,10 @@ export const RegistrerPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
-    console.log(formState);
+
+    if (!isFormValid) return;
+
+    dispatch(startCreatingUserWithEmailPassword(formState));
   };
   return (
     <AuthLayout title="Register">
