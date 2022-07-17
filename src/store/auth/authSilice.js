@@ -12,7 +12,7 @@ export const authSlice = createSlice({
   },
   reducers: {
     login: (state, { payload }) => {
-      state.status = "athenticated"; // "checking" 'not-athenticated','authenticated'
+      state.status = "authenticated"; // "checking" 'not-athenticated','authenticated'
       state.uid = payload.uid;
       state.email = payload.email;
       state.displayName = payload.displayName;
