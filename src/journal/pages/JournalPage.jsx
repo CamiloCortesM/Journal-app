@@ -1,9 +1,18 @@
+import { useDispatch } from "react-redux";
 import { AddOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { JournalLayout } from "../layout/JournalLayout";
 import { NoteView, NothingSelectedView } from "../views";
+import { startNewNot } from "../../store/journal";
 
 export const JournalPage = () => {
+  
+  const dispatch = useDispatch();
+
+  const onClickNewNode = () => {
+    dispatch(startNewNot());
+  };
+
   return (
     <JournalLayout>
       {/* <Typography>
@@ -26,6 +35,7 @@ export const JournalPage = () => {
           right: 50,
           bottom: 50,
         }}
+        onClick={onClickNewNode}
       >
         <AddOutlined sx={{ fontSize: 30 }} />
       </IconButton>
