@@ -52,7 +52,10 @@ export const journalSlice = createSlice({
       state.notes = [];
       state.active = null;
     },
-    deleteNodeById: (state, action) => {},
+    deleteNoteById: (state, action) => {
+      state.notes = state.notes.filter((note) => note.id !== action.payload);
+      state.active=null;
+    },
   },
 });
 
@@ -60,7 +63,7 @@ export const journalSlice = createSlice({
 export const {
   addNewEmptyNote,
   clearNotesLogout,
-  deleteNodeById,
+  deleteNoteById,
   savingNewNote,
   setActiveNote,
   setNotes,
