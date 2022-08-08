@@ -1,11 +1,5 @@
 {
   "name": "journal-app",
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "firebase/firestore/lite"
-    ]
-  },
   "private": true,
   "version": "0.0.0",
   "scripts": {
