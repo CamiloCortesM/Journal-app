@@ -45,7 +45,7 @@ export const registerUserWithEmailPassword = async ({
       password
     );
     const { uid, photoURL } = resp.user;
-    // TODO: actualizar el displayName en Firebase
+    // actualizar el displayName en Firebase
 
     await updateProfile(FireBaseAuth.currentUser, { displayName });
 

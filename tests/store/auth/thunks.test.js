@@ -1,11 +1,13 @@
 import {
   loginWithEmailPassword,
   logoutFirebase,
+  registerUserWithEmailPassword,
   singInWithGoogle,
 } from "../../../src/firebase/providers";
 import { checkingCredentials, login, logout } from "../../../src/store/auth";
 import {
   checkingAuthentication,
+  startCreatingUserWithEmailPassword,
   startGoogleSingIn,
   startLoginWithEmailPassword,
   startLogout,
@@ -45,7 +47,7 @@ describe("test in  AuthThunks", () => {
     expect(dispatch).toHaveBeenCalledWith(logout(loginData.errorMessage));
   });
 
-  test("startLoginWithEmailPassword must called checkingCredentials and login", async() => {
+  test("startLoginWithEmailPassword must called checkingCredentials and login", async () => {
     const loginData = { ok: true, ...demoUser };
     const formData = { email: demoUser.email, password: "123456" };
 
@@ -54,15 +56,29 @@ describe("test in  AuthThunks", () => {
     await startLoginWithEmailPassword(formData)(dispatch);
 
     expect(dispatch).toHaveBeenCalledWith(checkingCredentials());
-    expect(dispatch).toHaveBeenCalledWith(login(loginData))
+    expect(dispatch).toHaveBeenCalledWith(login(loginData));
   });
 
-  test('startLogout must called logoutFirebase,clearnotes and logout', async() => {
-    await startLogout()(dispatch)
+  test("startLogout must called logoutFirebase,clearnotes and logout", async () => {
+    await startLogout()(dispatch);
 
     expect(logoutFirebase).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(clearNotesLogout());
     expect(dispatch).toHaveBeenCalledWith(logout());
+  });
 
+  test("startCreatingUserWithEmailPassword must called and dispatch with login and checkingcredentials ", async () => {
+    const createData = { ok: true, ...demoUser };
+
+    await registerUserWithEmailPassword.mockResolvedValue(createData);
+
+    await startCreatingUserWithEmailPassword({
+      email: demoUser.email,
+      password: "123456",
+      displayName: demoUser.displayName,
+    })(dispatch);
+
+    expect(dispatch).toHaveBeenCalledWith(checkingCredentials());
+    expect(dispatch).toHaveBeenCalledWith(login({ uid:createData.uid, displayName:createData.displayName, email:createData.email, photoURL:createData.photoURL }))
   });
 });
