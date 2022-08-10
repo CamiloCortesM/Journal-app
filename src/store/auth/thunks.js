@@ -28,7 +28,7 @@ export const startCreatingUserWithEmailPassword = ({
   displayName,
 }) => {
   return async (dispatch) => {
-    //TODO
+    // TODO: 
     dispatch(checkingCredentials());
     const { ok, uid, photoURL, errorMessage } =
       await registerUserWithEmailPassword({
