@@ -6,8 +6,11 @@ import {
   savingNewNote,
   setActiveNote,
   setNotes,
+  setsaving,
   startLoadingNotes,
   startNewNot,
+  startSaveNote,
+  updateNote,
 } from "../../../src/store/journal";
 
 jest.mock("../../../src/helpers");
@@ -46,7 +49,6 @@ describe("Test in Jorunal Thunks", () => {
 
     const deletePromises = [];
     docs.forEach((doc) => deletePromises.push(deleteDoc(doc.ref)));
-    console.log(deletePromises);
     await Promise.all(deletePromises);
   });
 
@@ -72,5 +74,22 @@ describe("Test in Jorunal Thunks", () => {
     await startLoadingNotes()(dispatch, getState);
 
     expect(dispatch).toHaveBeenCalledWith(setNotes(notes));
+  });
+
+  test("startSaveNote must called setSaving and updateNote", async () => {
+    const uid = "TEST-UID";
+    const note = {
+      id: "dasdasdsa",
+      body: "esto es una prueba",
+      date: 123546546,
+      imageUrls: [],
+      title: "Prueba",
+    };
+    getState.mockReturnValue({ auth: { uid: uid }, journal: { active: note } });
+    await startSaveNote()(dispatch, getState);
+
+    expect(dispatch).toHaveBeenCalledWith(setsaving());
+    expect(dispatch).toHaveBeenCalledWith(updateNote(note));
+
   });
 });

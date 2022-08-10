@@ -39,7 +39,6 @@ export const startNewNot = () => {
 };
 
 export const startLoadingNotes = () => {
-  // TODO: 
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
     if (!uid) throw new Error("el UID del usuario no existe");
@@ -51,7 +50,6 @@ export const startLoadingNotes = () => {
 };
 
 export const startSaveNote = () => {
-  // TODO: 
   return async (dispatch, getState) => {
     dispatch(setsaving());
     const { uid } = getState().auth;
@@ -62,8 +60,6 @@ export const startSaveNote = () => {
     };
 
     delete noteToFirestore.id;
-
-    console.log(noteToFirestore);
 
     const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`);
 
