@@ -1,5 +1,7 @@
-import { checkingCredentials } from "../../../src/store/auth";
-import { checkingAuthentication } from "../../../src/store/auth/thunks";
+import { singInWithGoogle } from "../../../src/firebase/providers";
+import { checkingCredentials, login, logout } from "../../../src/store/auth";
+import { checkingAuthentication, startGoogleSingIn } from "../../../src/store/auth/thunks";
+import { demoUser } from "../../fixtures/authFixtures";
 
 jest.mock("../../../src/firebase/providers");
 
@@ -11,5 +13,25 @@ describe("test in  AuthThunks", () => {
     // checkingCredentials()
     await checkingAuthentication()(dispatch);
     expect(dispatch).toHaveBeenCalledWith(checkingCredentials());
+  });
+
+  test("startGoogleSingIn must called checkingCredentials and login", async() => {
+    const loginData = { ok: true, ...demoUser };
+
+    await singInWithGoogle.mockResolvedValue(loginData)
+
+    await startGoogleSingIn()(dispatch);
+    expect(dispatch).toHaveBeenCalledWith(checkingCredentials());
+    expect(dispatch).toHaveBeenCalledWith(login(loginData))
+  });
+
+  test("startGoogleSingIn must called checkingCredentials and logout", async() => {
+    const loginData = { ok:false, errorMessage:'Error' };
+
+    await singInWithGoogle.mockResolvedValue(loginData)
+
+    await startGoogleSingIn()(dispatch);
+    expect(dispatch).toHaveBeenCalledWith(checkingCredentials());
+    expect(dispatch).toHaveBeenCalledWith(logout(loginData.errorMessage))
   });
 });
