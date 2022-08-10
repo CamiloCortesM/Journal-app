@@ -39,6 +39,7 @@ export const startNewNot = () => {
 };
 
 export const startLoadingNotes = () => {
+  //TODO
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
     if (!uid) throw new Error("el UID del usuario no existe");
@@ -50,6 +51,7 @@ export const startLoadingNotes = () => {
 };
 
 export const startSaveNote = () => {
+  //TODO
   return async (dispatch, getState) => {
     dispatch(setsaving());
     const { uid } = getState().auth;
@@ -72,6 +74,7 @@ export const startSaveNote = () => {
 };
 
 export const startUploadingFiles = (files = []) => {
+  //TODO
   return async (dispatch) => {
     dispatch(setsaving());
 
@@ -87,6 +90,7 @@ export const startUploadingFiles = (files = []) => {
 };
 
 export const startDeletingNote = () => {
+  //TODO
   return async (dispatch,getState) => {
     const {uid} = getState().auth;
     const {active:note} = getState().journal;
