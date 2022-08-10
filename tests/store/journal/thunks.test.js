@@ -1,11 +1,16 @@
 import { collection, deleteDoc, getDocs } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../../src/firebase/config";
+import { loadNotes } from "../../../src/helpers";
 import {
   addNewEmptyNote,
   savingNewNote,
   setActiveNote,
+  setNotes,
+  startLoadingNotes,
   startNewNot,
 } from "../../../src/store/journal";
+
+jest.mock("../../../src/helpers");
 
 describe("Test in Jorunal Thunks", () => {
   const dispatch = jest.fn();
@@ -43,5 +48,29 @@ describe("Test in Jorunal Thunks", () => {
     docs.forEach((doc) => deletePromises.push(deleteDoc(doc.ref)));
     console.log(deletePromises);
     await Promise.all(deletePromises);
+  });
+
+  test("startLoadingNotes must called setNotes ", async () => {
+    const notes = [
+      {
+        body: "esto es una prueba",
+        date: 123546546,
+        imageUrls: [],
+        title: "Prueba",
+      },
+      {
+        body: "esto es una prueba2",
+        date: 92135135,
+        imageUrls: [],
+        title: "Prueba2",
+      },
+    ];
+    const uid = "TEST-UID";
+    await loadNotes.mockResolvedValue(notes);
+    getState.mockReturnValue({ auth: { uid: uid } });
+
+    await startLoadingNotes()(dispatch, getState);
+
+    expect(dispatch).toHaveBeenCalledWith(setNotes(notes));
   });
 });
