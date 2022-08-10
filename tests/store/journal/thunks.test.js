@@ -3,11 +3,13 @@ import { FirebaseDB } from "../../../src/firebase/config";
 import { loadNotes } from "../../../src/helpers";
 import {
   addNewEmptyNote,
+  deleteNoteById,
   savingNewNote,
   setActiveNote,
   setNotes,
   setPhotosToActiveNote,
   setsaving,
+  startDeletingNote,
   startLoadingNotes,
   startNewNot,
   startSaveNote,
@@ -95,9 +97,23 @@ describe("Test in Jorunal Thunks", () => {
   });
 
   test("startUploadingFiles must called setsaving and setPhotosToActiveNote", async () => {
-
     await startUploadingFiles()(dispatch);
     expect(dispatch).toHaveBeenCalledWith(setsaving());
     expect(dispatch).toHaveBeenCalledWith(setPhotosToActiveNote([]));
+  });
+
+  test("startDeletingNote must called deleteNoteById", async() => {
+    const uid = "TEST-UID";
+    const note = {
+      id: "dasdasdsa",
+      body: "esto es una prueba",
+      date: 123546546,
+      imageUrls: [],
+      title: "Prueba",
+    };
+    getState.mockReturnValue({ auth: { uid: uid }, journal: { active: note } });
+    await startDeletingNote()(dispatch, getState);
+
+    expect(dispatch).toHaveBeenCalledWith(deleteNoteById(note.id));
   });
 });

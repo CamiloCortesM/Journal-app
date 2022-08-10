@@ -69,8 +69,7 @@ export const startSaveNote = () => {
   };
 };
 
-export const startUploadingFiles = (files = []) => {
-  // TODO: 
+export const startUploadingFiles = (files = []) => { 
   return async (dispatch) => {
     dispatch(setsaving());
 
@@ -86,7 +85,6 @@ export const startUploadingFiles = (files = []) => {
 };
 
 export const startDeletingNote = () => {
-  // TODO: 
   return async (dispatch,getState) => {
     const {uid} = getState().auth;
     const {active:note} = getState().journal;
