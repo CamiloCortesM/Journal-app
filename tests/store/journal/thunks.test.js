@@ -6,10 +6,12 @@ import {
   savingNewNote,
   setActiveNote,
   setNotes,
+  setPhotosToActiveNote,
   setsaving,
   startLoadingNotes,
   startNewNot,
   startSaveNote,
+  startUploadingFiles,
   updateNote,
 } from "../../../src/store/journal";
 
@@ -90,6 +92,12 @@ describe("Test in Jorunal Thunks", () => {
 
     expect(dispatch).toHaveBeenCalledWith(setsaving());
     expect(dispatch).toHaveBeenCalledWith(updateNote(note));
+  });
 
+  test("startUploadingFiles must called setsaving and setPhotosToActiveNote", async () => {
+
+    await startUploadingFiles()(dispatch);
+    expect(dispatch).toHaveBeenCalledWith(setsaving());
+    expect(dispatch).toHaveBeenCalledWith(setPhotosToActiveNote([]));
   });
 });
