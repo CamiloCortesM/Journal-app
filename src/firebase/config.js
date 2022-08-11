@@ -2,8 +2,15 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore/lite";
+import { getEnvironments } from "../helpers/getEnvironments";
 // Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
+const env = getEnvironments();
+console.log(env);
+
+// console.log(process.env)
+// console.log(import.meta.env)
 
 // Your web app's Firebase configuration
 //Dev/Prod
@@ -24,7 +31,7 @@ const firebaseConfig = {
   storageBucket: "testing-eb245.appspot.com",
   messagingSenderId: "1034242638894",
   appId: "1:1034242638894:web:f495d1846edcb4511a8bbf",
-  measurementId: "G-5JRZVBEFKL"
+  measurementId: "G-5JRZVBEFKL",
 };
 
 // Initialize Firebase
