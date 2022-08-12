@@ -18,7 +18,7 @@ jest.mock("../../../src/store/auth/thunks", () => ({
 
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
-  useDispatch: jest.fn(),
+  useDispatch: () => (fn) => fn(),
 }));
 
 const store = configureStore({
