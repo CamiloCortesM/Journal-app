@@ -14,6 +14,7 @@ exports[`Test in LoginPage must show the correct component 1`] = `
         Login
       </h5>
       <form
+        aria-label="submit-form"
         class="animate__animated animate__fadeIn animate__faster"
       >
         <div
@@ -80,6 +81,7 @@ exports[`Test in LoginPage must show the correct component 1`] = `
                 <input
                   aria-invalid="false"
                   class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+                  data-testid="password"
                   id=":r1:"
                   name="password"
                   placeholder="Contraseña"
