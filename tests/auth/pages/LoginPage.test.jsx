@@ -14,16 +14,16 @@ const store = configureStore({
 
 describe("Test in LoginPage", () => {
   test("must show the correct component", () => {
-    render(
+    const { container } = render(
       <Provider store={store}>
         <MemoryRouter>
           <LoginPage />
         </MemoryRouter>
       </Provider>
     );
-
-    screen.debug();
+    // screen.debug();
 
     expect(screen.getAllByText("Login").length).toBeGreaterThanOrEqual(1);
+    expect(container).toMatchSnapshot();
   });
 });
